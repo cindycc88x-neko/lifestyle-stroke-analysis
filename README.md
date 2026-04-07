@@ -1,62 +1,113 @@
 # Lifestyle Factors and Stroke Risk Analysis
 
 ## Project Overview
-This project explores the relationship between lifestyle factors and stroke risk using a healthcare dataset. The goal is to identify potential risk indicators and evaluate whether lifestyle-related variables can be used to predict stroke occurrence.
+
+This project explores the relationship between mental health (approximated by smoking behavior) and stroke risk using a healthcare dataset.
+
+The goal is to understand how psychological and lifestyle factors contribute to stroke occurrence.
+
+---
 
 ## Dataset
-The dataset includes demographic and health-related information such as age, BMI, glucose level, smoking status, and work type.
 
-## Methods
+* Source: Kaggle Stroke Dataset
+* Features include:
 
-### 1. Exploratory Data Analysis
-We examined the relationship between several lifestyle factors and stroke risk:
+  * Age
+  * Hypertension
+  * Heart disease
+  * Smoking status
+  * BMI
+  * Glucose level
+  * Stroke outcome (target variable)
 
-- Smoking status
-- Work type
-- Marital status
-- Body Mass Index (BMI)
-- Average glucose level
+---
 
-Bar charts were used to compare stroke rates across different categories.
+## Feature Engineering
 
-### 2. Key Findings
+A proxy variable for mental stress was created:
 
-- Individuals with higher glucose levels showed a significantly higher stroke rate.
-- Smoking history appears to be associated with increased stroke risk.
-- Work type and marital status may reflect underlying demographic and lifestyle differences.
-- BMI showed a weaker but noticeable association.
+df['mental_stress'] = (df['smoking_status'] == 'smokes') * 1
 
-### 3. Data Preprocessing
+This assumes active smokers may experience higher levels of psychological stress.
 
-- Missing BMI values were filled using the mean.
-- Categorical variables were transformed using one-hot encoding.
+---
 
-### 4. Model
+## Exploratory Data Analysis
 
-A Logistic Regression model was used to predict stroke risk.
+### Stroke Distribution
 
-- Class imbalance was handled using `class_weight='balanced'`.
-- Features included:
-  - BMI
-  - Glucose level
-  - Smoking status
-  - Work type
-  - Marital status
+![Stroke Distribution](https://github.com/cindycc88x-neko/stroke-mental-health-analysis/blob/main/stroke.jpg?raw=true)
 
-### 5. Results
+Stroke cases are relatively rare in the dataset, indicating strong class imbalance.
 
-- Accuracy: 0.67
-- Recall (stroke cases): 0.61
-- Precision (stroke cases): 0.10
+---
 
-The model demonstrated a moderate ability to identify stroke cases, though with a high false positive rate.
+### Average Age by Stroke Status
 
-## Discussion
+![Age Analysis](https://github.com/cindycc88x-neko/stroke-mental-health-analysis/blob/main/age.jpg?raw=true)
 
-The results suggest that lifestyle factors, particularly glucose level and smoking, are associated with stroke risk.
+Stroke patients tend to be significantly older than non-stroke individuals.
 
-In a healthcare context, prioritizing recall is often more important than precision, as identifying high-risk individuals is critical for early intervention.
+---
 
-## Conclusion
+### Stroke Rate by Smoking Status
 
-This project highlights the potential of using lifestyle-related variables to assess stroke risk. Further improvements could include additional clinical variables and more advanced models.
+![Smoking Analysis](https://github.com/cindycc88x-neko/stroke-mental-health-analysis/blob/main/smoking.jpg?raw=true)
+
+Individuals with a smoking history show a higher risk of stroke, suggesting lifestyle-related influence.
+
+---
+
+### Stroke Rate by Mental Stress Proxy
+
+![Mental Stress Analysis](https://github.com/cindycc88x-neko/stroke-mental-health-analysis/blob/main/stress.jpg?raw=true)
+
+The stress proxy group demonstrates a slightly higher stroke rate, indicating a potential relationship between psychological stress and stroke risk.
+
+---
+
+## Modeling
+
+### Model Used
+
+* Logistic Regression
+
+### Handling Class Imbalance
+
+class_weight='balanced' was used to improve model performance on minority (stroke) cases.
+
+---
+
+## Model Performance
+
+| Metric             | Value |
+| ------------------ | ----- |
+| Accuracy           | ~0.73 |
+| Recall (Stroke)    | ~0.61 |
+| Precision (Stroke) | ~0.10 |
+
+---
+
+## Key Insights
+
+* Age is a strong predictor of stroke
+* Mental stress proxy (based on smoking) shows a potential association
+* Class imbalance significantly affects prediction performance
+* The model prioritises recall over precision, which aligns with medical risk detection needs
+
+---
+
+## Tools Used
+
+* Python
+* Pandas
+* Matplotlib
+* Scikit-learn
+
+---
+
+## Author
+
+Shuran Cui
+MSc Health Data Science (Incoming), University of Manchester
