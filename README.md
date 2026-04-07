@@ -1,10 +1,16 @@
 # Lifestyle Factors and Stroke Risk Analysis
 
-## Project Overview
+## Background
 
-This project explores the relationship between mental health (approximated by smoking behavior) and stroke risk using a healthcare dataset.
+Stroke is one of the leading causes of death and disability worldwide. While clinical factors such as hypertension and heart disease are well studied, lifestyle factors may also play an important role in stroke risk.
 
-The goal is to understand how psychological and lifestyle factors contribute to stroke occurrence.
+Understanding how lifestyle-related variables influence stroke risk can support early prevention and public health strategies.
+
+---
+
+## Objective
+
+This project aims to investigate the relationship between lifestyle factors and stroke risk, and evaluate whether these variables can be used for predictive modelling.
 
 ---
 
@@ -13,57 +19,53 @@ The goal is to understand how psychological and lifestyle factors contribute to 
 * Source: Kaggle Stroke Dataset
 * Features include:
 
-  * Age
-  * Hypertension
-  * Heart disease
   * Smoking status
   * BMI
-  * Glucose level
+  * Average glucose level
+  * Work type
+  * Marital status
   * Stroke outcome (target variable)
-
----
-
-## Feature Engineering
-
-A proxy variable for mental stress was created:
-
-df['mental_stress'] = (df['smoking_status'] == 'smokes') * 1
-
-This assumes active smokers may experience higher levels of psychological stress.
 
 ---
 
 ## Exploratory Data Analysis
 
-### Stroke Distribution
-
-![Stroke Distribution](https://github.com/cindycc88x-neko/stroke-mental-health-analysis/blob/main/stroke.jpg?raw=true)
-
-Stroke cases are relatively rare in the dataset, indicating strong class imbalance.
-
----
-
-### Average Age by Stroke Status
-
-![Age Analysis](https://github.com/cindycc88x-neko/stroke-mental-health-analysis/blob/main/age.jpg?raw=true)
-
-Stroke patients tend to be significantly older than non-stroke individuals.
-
----
-
 ### Stroke Rate by Smoking Status
 
-![Smoking Analysis](https://github.com/cindycc88x-neko/stroke-mental-health-analysis/blob/main/smoking.jpg?raw=true)
+![Smoking Analysis](https://github.com/cindycc88x-neko/lifestyle-stroke-analysis/blob/main/smoking.jpg?raw=true)
 
-Individuals with a smoking history show a higher risk of stroke, suggesting lifestyle-related influence.
+Individuals with a history of smoking show a higher stroke rate, suggesting lifestyle-related risk.
 
 ---
 
-### Stroke Rate by Mental Stress Proxy
+### Stroke Rate by Marital Status
 
-![Mental Stress Analysis](https://github.com/cindycc88x-neko/stroke-mental-health-analysis/blob/main/stress.jpg?raw=true)
+![Marital Analysis](https://github.com/cindycc88x-neko/lifestyle-stroke-analysis/blob/main/marital.jpg?raw=true)
 
-The stress proxy group demonstrates a slightly higher stroke rate, indicating a potential relationship between psychological stress and stroke risk.
+Marital status appears associated with stroke risk, possibly reflecting age and social factors.
+
+---
+
+### Stroke Rate by Work Type
+
+![Work Type Analysis](https://github.com/cindycc88x-neko/lifestyle-stroke-analysis/blob/main/work.jpg?raw=true)
+
+Different work categories show variation in stroke rates, indicating potential socioeconomic influences.
+
+---
+
+### BMI and Glucose Level by Stroke Status
+
+![BMI and Glucose](https://github.com/cindycc88x-neko/lifestyle-stroke-analysis/blob/main/bmi%20&%20glucose.jpg?raw=true)
+
+Stroke patients tend to have higher average glucose levels, while BMI shows a smaller difference.
+
+---
+
+## Data Preprocessing
+
+* Missing BMI values were filled using the mean
+* Categorical variables were converted using one-hot encoding
 
 ---
 
@@ -75,7 +77,11 @@ The stress proxy group demonstrates a slightly higher stroke rate, indicating a 
 
 ### Handling Class Imbalance
 
-class_weight='balanced' was used to improve model performance on minority (stroke) cases.
+To address the imbalance in stroke cases:
+
+```python
+class_weight='balanced'
+```
 
 ---
 
@@ -83,7 +89,7 @@ class_weight='balanced' was used to improve model performance on minority (strok
 
 | Metric             | Value |
 | ------------------ | ----- |
-| Accuracy           | ~0.73 |
+| Accuracy           | ~0.67 |
 | Recall (Stroke)    | ~0.61 |
 | Precision (Stroke) | ~0.10 |
 
@@ -91,10 +97,16 @@ class_weight='balanced' was used to improve model performance on minority (strok
 
 ## Key Insights
 
-* Age is a strong predictor of stroke
-* Mental stress proxy (based on smoking) shows a potential association
-* Class imbalance significantly affects prediction performance
-* The model prioritises recall over precision, which aligns with medical risk detection needs
+* Glucose level is strongly associated with stroke risk
+* Smoking and lifestyle factors show potential influence
+* Model prioritises recall, aligning with healthcare risk detection
+* Class imbalance significantly affects performance
+
+---
+
+## Conclusion
+
+This project highlights the importance of lifestyle factors in stroke risk assessment. While predictive performance is limited, the model demonstrates potential for identifying high-risk individuals.
 
 ---
 
